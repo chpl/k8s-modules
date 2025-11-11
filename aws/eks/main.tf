@@ -1,5 +1,5 @@
 locals {
-  managed_node_group_name = "deployment"
+  managed_node_group_name = "deployment_v2"
 }
 
 module "eks" {
@@ -25,7 +25,7 @@ module "eks" {
   cluster_endpoint_public_access = true
 
   eks_managed_node_group_defaults = {
-    ami_type = "AL2_x86_64"
+    ami_type = "AL2023_x86_64_STANDARD"
 
     block_device_mappings = {
       xvda = {
@@ -40,10 +40,10 @@ module "eks" {
   }
 
   eks_managed_node_groups = {
-    deployment = {
+    deployment_v2 = {
       version = var.kubernetes_version
 
-      name            = local.managed_node_group_name
+      name            = "deployment_v2"
       use_name_prefix = false
 
       min_size     = var.min_capacity
@@ -62,14 +62,19 @@ module "eks" {
   cluster_addons = {
     coredns = {
       preserve = true
+      addon_version = var.coredns_version
 
       timeouts = {
         create = "25m"
         delete = "10m"
       }
     }
-    kube-proxy = {}
-    vpc-cni    = {}
+    kube-proxy = {
+      addon_version = var.kube_proxy_version
+    }
+    vpc-cni    = {
+      addon_version = var.vpc_cni_version
+    }
   }
 
   create_kms_key            = false
