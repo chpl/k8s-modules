@@ -46,8 +46,8 @@ resource "aws_dynamodb_table" "deployment_remote_run_logs_table" {
   }
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 
-  deletion_protection_enabled = true
+  deletion_protection_enabled = false
 }
