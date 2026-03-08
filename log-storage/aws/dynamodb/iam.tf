@@ -1,6 +1,6 @@
 locals {
   deployment_task_runtime_timeout_seconds = 18000 # 5 hours
-  env0_aws_account_id                     = "913128560467"
+  env0_aws_account_id                     = var.source_account_id
   assume_role_policy_statement = [
     {
       Action = "sts:AssumeRole"
