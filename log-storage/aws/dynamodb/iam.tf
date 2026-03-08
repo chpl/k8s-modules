@@ -1,6 +1,6 @@
 locals {
   deployment_task_runtime_timeout_seconds = 18000 # 5 hours
-  env0_aws_account_id                     = var.source_account_id
+  env0_aws_account_id                     = var.env0_stage == "prod" ? "913128560467" : "170412844252"
   assume_role_policy_statement = [
     {
       Action = "sts:AssumeRole"
@@ -50,6 +50,7 @@ resource "aws_iam_role" "log_reader" {
     })
   }
 }
+
 resource "aws_iam_role" "log_writer" {
   name                 = "RoleAssumedByEnv0ToWriteLogsToAgent"
   max_session_duration = local.deployment_task_runtime_timeout_seconds
@@ -99,4 +100,3 @@ resource "aws_iam_role" "log_writer" {
     })
   }
 }
-

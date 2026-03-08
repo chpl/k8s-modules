@@ -1,5 +1,9 @@
-variable "source_account_id" {
-  default = "913128560467"
+variable "region" {
+  default = "us-east-1"
+}
+
+variable "env0_stage" {
+  default = "prod"
 }
 
 variable "external_id" {

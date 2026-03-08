@@ -1,5 +1,5 @@
 resource "aws_dynamodb_table" "deployment_logs_table" {
-  name         = "deployment-step-service-prod-logs-${var.agent_key}"
+  name         = "deployment-step-service-${var.env0_stage}-logs-${var.agent_key}"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "id"
   range_key    = "timestamp"
@@ -21,10 +21,12 @@ resource "aws_dynamodb_table" "deployment_logs_table" {
   lifecycle {
     prevent_destroy = true
   }
+
+  deletion_protection_enabled = true
 }
 
 resource "aws_dynamodb_table" "deployment_remote_run_logs_table" {
-  name         = "deployment-step-service-prod-remote-run-logs-${var.agent_key}"
+  name         = "deployment-step-service-${var.env0_stage}-remote-run-logs-${var.agent_key}"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "deploymentLogId"
   range_key    = "offsetStart"
@@ -46,4 +48,6 @@ resource "aws_dynamodb_table" "deployment_remote_run_logs_table" {
   lifecycle {
     prevent_destroy = true
   }
+
+  deletion_protection_enabled = true
 }
